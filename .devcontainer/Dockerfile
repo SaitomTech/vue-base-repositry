@@ -18,3 +18,14 @@ RUN groupadd --gid $USER_GID $USERNAME \
 # 「$USERNAMEの人が、rootと同じ行動を、全てパスワード無しで実行できる」の意
 RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
+
+# terminal setting (gitコマンドの補完/ブランチ名の表示)
+RUN wget --progress=dot:giga https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -O /home/vscode/.git-completion.bash \
+    && wget --progress=dot:giga https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -O /home/vscode/.git-prompt.sh \
+    && chmod a+x /home/vscode/.git-completion.bash \
+    && chmod a+x /home/vscode/.git-prompt.sh \
+    && echo -e "\n\
+    source ~/.git-completion.bash\n\
+    source ~/.git-prompt.sh\n\
+    export PS1='\\[\\e]0;\\u@\\h: \\w\\a\\]\${debian_chroot:+(\$debian_chroot)}\\[\\033[01;32m\\]\\u\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\[\\033[1;30m\\]\$(__git_ps1)\\[\\033[0m\\] \\$ '\n\
+    " >>  /home/vscode/.bashrc
