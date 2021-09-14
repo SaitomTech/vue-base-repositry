@@ -34,5 +34,4 @@ RUN wget --progress=dot:giga https://raw.githubusercontent.com/git/git/master/co
 RUN wget --progress=dot:giga https://github.com/hadolint/hadolint/releases/download/v2.6.0/hadolint-Linux-x86_64 -O /usr/local/bin/hadolint \
     && chmod +x /usr/local/bin/hadolint
 
-
-
+CMD ["/bin/bash"]
