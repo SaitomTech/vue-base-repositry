@@ -1,16 +1,20 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.191.0/containers/javascript-node/.devcontainer/base.Dockerfile
 
-# [Choice] Node.js version: 16, 14, 12
-ARG VARIANT="16"
-FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:0-${VARIANT}
+FROM node:12
+ENV TZ=Asia/Tokyo
+RUN echo $TZ > /etc/timezone
 
-# [Optional] Uncomment this section to install additional OS packages.
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
+ARG WORKDIR=/project_name
+WORKDIR ${WORKDIR}
 
-# [Optional] Uncomment if you want to install an additional version of node using nvm
-# ARG EXTRA_NODE_VERSION=10
-# RUN su node -c "umask 0002 && ./usr/local/share/nvm/nvm.sh && nvm install ${EXTRA_NODE_VERSION}"
+# Set user/group ID (UID/GID) & USERNAME
+ARG USER_UID=1000
+ARG USER_GID=${USER_UID}
+ARG USERNAME=vscode
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME
 
-# [Optional] Uncomment if you want to install more global node modules
-# RUN su node -c "npm install -g <your-package-list-here>"
+# Add sudo support for non-root user
+# 「$USERNAMEの人が、rootと同じ行動を、全てパスワード無しで実行できる」の意
+RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
