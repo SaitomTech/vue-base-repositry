@@ -4,7 +4,7 @@ FROM node:12
 ENV TZ=Asia/Tokyo
 RUN echo $TZ > /etc/timezone
 
-ARG WORKDIR=/project_name
+ARG WORKDIR=/workspace
 WORKDIR ${WORKDIR}
 
 # Set user/group ID (UID/GID) & USERNAME
