@@ -9,6 +9,9 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.16.1"
+    "@vue/cli": "^4.5.13",
+    "@vue/cli-init": "^4.5.13",
+    "express": "^4.16.1",
+    "my-dependency": "^1.0.1"
   }
 }

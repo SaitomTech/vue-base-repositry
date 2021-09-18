@@ -51,5 +51,5 @@ RUN wget --progress=dot:giga https://raw.githubusercontent.com/git/git/master/co
 # install hadolint
 RUN wget --progress=dot:giga https://github.com/hadolint/hadolint/releases/download/v2.6.0/hadolint-Linux-x86_64 -O /usr/local/bin/hadolint \
     && chmod +x /usr/local/bin/hadolint
-
+RUN npm install -g @vue/cli
 CMD ["/bin/bash"]
