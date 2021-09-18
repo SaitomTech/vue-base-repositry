@@ -9,6 +9,8 @@ services:
     volumes:
       - .:/workspace
       - ${USERPROFILE-~}/.ssh:/home/vscode/.ssh
+    ports: 
+      - 8080:8080
     image: node-vue-image 
     container_name: node-vue-container 
     tty: true
